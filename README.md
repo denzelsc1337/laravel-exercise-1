@@ -4,8 +4,8 @@
 **Objetivo:** Envío en masa de un correo promocional a 10,000 usuarios sin afectar el rendimiento principal de la aplicación.
 
 ## **Normativas**
-**Recursos:** Usaremos unicamente laravel sin packetes externos, puedes buscar en google y documentacion de laravel
-**Prohibido:** no usar Inteligencia artificial ni Github copilot o parecidos
+- **Recursos:** Usaremos unicamente laravel sin packetes externos, puedes buscar en google y documentacion de laravel
+- **Prohibido:** no usar Inteligencia artificial ni Github copilot o parecidos
 
 ### **Configuración Inicial:**
 
