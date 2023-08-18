@@ -6,8 +6,7 @@
 ### **Configuración Inicial:**
 
 1. **Instalacion** ejercicio laravel: `compose require byancode/laravel-exercise-1`
-2. **Service Provider** ejecuta el comando `php artisan vendor:publish --provider="Byancode\LaravelExercise1\Serv
-iceProvider`
+2. **Service Provider** ejecuta el comando `php artisan vendor:publish --provider="Byancode\LaravelExercise1\ServiceProvider`
 3. **Variables de Entorno:** Establece el email del sistema `test@byancode.com` y el nombre "Byancode" en las variables de entorno.
 
 ### **Modelos y Datos:**
