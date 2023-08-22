@@ -1,0 +1,36 @@
+on: push
+name: Unit Tests
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    container:
+      image: kirschbaumdevelopment/laravel-test-runner:8.1
+
+    services:
+      redis:
+        image: redis:alpine
+        ports:
+          - 6379:6379
+
+      mailpit:
+        image: axllent/mailpit
+        ports:
+          - 1025:1025
+
+    steps:
+    - uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+
+    - name: Install composer dependencies
+      run: |
+        composer install --no-scripts
+
+    - name: Prepare Laravel Application
+      run: |
+        php artisan key:generate
+        php artisan exercise:ci
+        php artisan migrate
+
+    - name: Run Testsuite
+      run: php artisan test
