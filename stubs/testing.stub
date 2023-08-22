@@ -54,20 +54,20 @@ class Exercise1Test extends TestCase
         $this->artisan('list')->expectsOutputToContain('users:send-newsletter');
     }
 
-    public function test_verificar_propiedad_subject_en_el_modelo_notification(): void
+    public function test_verificar_propiedad_title_en_el_modelo_notification(): void
     {
         $this->assertTrue(class_exists('App\Models\Notification'));
         $model = new \App\Models\Notification();
-        $this->assertTrue($model->isFillable('subject'));
+        $this->assertTrue($model->isFillable('title'));
     }
 
-    public function test_subject_correcto_de_Notification(): void
+    public function test_title_correcto_de_Notification(): void
     {
         $this->runSeeds();
 
         $this->assertDatabaseCount('notifications', 1);
         $model = DB::table('notifications')->first();
-        $this->assertEquals('Nueva actualizacion del sistema', $model->subject);
+        $this->assertEquals('Nueva actualizacion del sistema', $model->title);
     }
 
     public function test_verificar_10_mil_usuarios_registrados() : void
