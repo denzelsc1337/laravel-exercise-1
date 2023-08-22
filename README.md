@@ -1,5 +1,5 @@
 
-# 📦 Ejercicio 1: Envío de Boletín Informativo
+# 📦 Ejercicio 1: Envío de email masivos
 
 Envío en masa de un correo promocional a 1,000,000 usuarios sin afectar el rendimiento principal de la aplicación.
 
@@ -10,6 +10,7 @@ Envío en masa de un correo promocional a 1,000,000 usuarios sin afectar el rend
 - ⛔ prohibido github copilot
 - ✅ permitido documentacion de laravel
 - ✅ permitido google, stackoverflow
+
 ### 🛠 **Configuración Inicial:**
 
 1. **Instalacion** ejercicio laravel:
@@ -26,32 +27,27 @@ MAIL_FROM_ADDRESS="test@byancode.com"
 MAIL_FROM_NAME="Byancode"
 ```
 
-### 🗂 **Modelos y Datos:**
+### 📋 **Informacion adicional:**
 
-1. **Modelo `Newsletter`:**
-    - Crea un modelo llamado `Newsletter`.
+1. **Modelo `Notification`:** [reference](https://laravel.com/docs/10.x/eloquent-relationships#many-to-many-model-structure)
+    - Crea un modelo llamado `Notification` con los siguientes atributos:
+        - `id`
+        - `title`
     - Establece una relación `belongsToMany` con el modelo `User`.
 
-2. **Población de Datos (Seeders):**
+2. **Población de Datos (Seeders):** [reference](https://laravel.com/docs/10.x/seeding#writing-seeders)
     - Llena la tabla `users` con 1,000,000 registros de usuarios ficticios.
-    - Crea un registro en `Newsletter` con un asunto (`subject`) que diga: **'Nueva actualizacion del sistema'**.
+    - Agrega un registro en la tabla `notifications`, donde el contenido del atributo `title` sea: **'Nueva actualización del sistema'**.
 
-### **Funcionalidad de Envío:**
+3. **Comando Personalizado:** [reference](https://laravel.com/docs/10.x/artisan#generating-commands)
+    - Crea un comando que pueda invocarse como: php artisan `users:send-newsletter`.
 
-4. **Comando Personalizado:** Crea un comando de Artisan que pueda invocarse como: `php artisan users:send-newsletter`.
+4. **Clase Mailable `NotificationShipped`:** [reference](https://laravel.com/docs/10.x/mail#generating-mailables)
+    - Crea una clase mailable llamada `NotificationShipped`.
+    - En el constructor, recibe el modelo `Notification` como parámetro.
 
-5. **Clase Mailable:**
-    - Crea una clase mailable llamada `NewsletterShipped`.
-    - En su constructor, recibe el modelo `Newsletter` como parámetro.
-    - En la función `envelope` retorna la clase `envelope` pasandole como argumento `subject` de el modelo `Newsletter`.
-    - En la función `content`, retorna una instancia de la clase `Content` con el argumento `text` que diga: "Enviado correctamente".
+5. **Programación del Comando:** [reference](https://laravel.com/docs/10.x/scheduling#scheduling-artisan-commands)
+    - Programa el comando `users:send-newsletter` en el `Kernel` de la consola, para que se ejecute cada minuto.
 
-6. **Funcionalidad del Comando:**
-    - **Función `retrieve`:** Dentro del comando `users:send-newsletter`:
-        - Obten una lista de 100 usuarios que no estén registrados en la tabla pivot en una unica consulta con eloquent.
-        - Recupera el primer registro de `Newsletter` para que lo pases como argumento a la clase `NewsletterShipped`.
-        - Usa `Mail::to` para enviar el boletín a los usuarios seleccionados utilizando la función `queue` y pasando la clase `NewsletterShipped` como argumento.
-    - **Función `handle`:** Dentro del mismo comando:
-        - Haz un bucle que ejecute la función `retrieve` 10 veces, de esta manera se enviarán correos a 1,000 usuarios.
-
-7. **Programación del Comando:** En el archivo `Kernel` de Laravel, programa que el comando `users:send-newsletter` se ejecute cada minuto con la ayuda del scheduler.
+### 📒 NOTA:
+> El modelo `Notification` servira para registrar los usuarios que se les envio un email mediante la relacion `BelongsToMany`

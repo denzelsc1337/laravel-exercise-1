@@ -19,19 +19,19 @@ class Exercise1Test extends TestCase
     {
         $this->seed();
 
-        if (\class_exists('\Database\Seeders\NewsletterSeeder')) {
-            $this->seed('\Database\Seeders\NewsletterSeeder');
+        if (\class_exists('\Database\Seeders\NotificationSeeder')) {
+            $this->seed('\Database\Seeders\NotificationSeeder');
         }
     }
 
-    public function test_existe_el_model_newsletter(): void
+    public function test_existe_el_model_notification(): void
     {
-        $this->assertTrue(class_exists('App\Models\Newsletter'));
+        $this->assertTrue(class_exists('App\Models\Notification'));
     }
 
-    public function test_existe_el_modelo_newslettershipped(): void
+    public function test_existe_el_modelo_notificationshipped(): void
     {
-        $this->assertTrue(class_exists('App\Mail\NewsletterShipped'));
+        $this->assertTrue(class_exists('App\Mail\NotificationShipped'));
     }
 
     public function test_direccion_correcta_de_correo_del_sistema(): void
@@ -44,29 +44,29 @@ class Exercise1Test extends TestCase
         $this->assertEquals(static::EMAIL_FROM_NAME, config('mail.from.name'));
     }
 
-    public function test_existe_tabla_pivot_entre_newsletter_y_users(): void
+    public function test_existe_tabla_pivot_entre_notification_y_users(): void
     {
-        $this->assertTrue(DB::getSchemaBuilder()->hasTable('newsletter_user'));
+        $this->assertTrue(DB::getSchemaBuilder()->hasTable('notification_user'));
     }
 
-    public function test_existe_comando_users_send_newsletter(): void
+    public function test_existe_comando_users_send_notification(): void
     {
-        $this->artisan('list')->expectsOutputToContain('users:send-newslatter');
+        $this->artisan('list')->expectsOutputToContain('users:send-newsletter');
     }
 
-    public function test_verificar_propiedad_subject_en_el_modelo_newsletter(): void
+    public function test_verificar_propiedad_subject_en_el_modelo_notification(): void
     {
-        $this->assertTrue(class_exists('App\Models\Newsletter'));
-        $model = new \App\Models\Newsletter();
+        $this->assertTrue(class_exists('App\Models\Notification'));
+        $model = new \App\Models\Notification();
         $this->assertTrue($model->isFillable('subject'));
     }
 
-    public function test_subject_correcto_de_newsletter(): void
+    public function test_subject_correcto_de_Notification(): void
     {
         $this->runSeeds();
 
-        $this->assertDatabaseCount('newsletters', 1);
-        $model = DB::table('newsletters')->first();
+        $this->assertDatabaseCount('notifications', 1);
+        $model = DB::table('notifications')->first();
         $this->assertEquals('Nueva actualizacion del sistema', $model->subject);
     }
 
@@ -78,28 +78,28 @@ class Exercise1Test extends TestCase
 
     public function test_existe_el_comando_en_schedule(): void
     {
-        $this->artisan('schedule:list')->expectsOutputToContain('users:send-newslatter');
+        $this->artisan('schedule:list')->expectsOutputToContain('users:send-newsletter');
     }
 
     public function test_se_ejecuto_correctamente_10_consultas(): void
     {
         $this->runSeeds();
-        $this->artisan('users:send-newslatter')->assertSuccessful();
+        $this->artisan('users:send-newsletter')->assertSuccessful();
         $this->expectsDatabaseQueryCount(10);
     }
 
-    public function test_se_registraron_mil_usuarion_en_relacion_con_newsletter(): void
+    public function test_se_registraron_mil_usuarion_en_relacion_con_Notification(): void
     {
         $this->runSeeds();
-        $this->artisan('users:send-newslatter')->assertSuccessful();
+        $this->artisan('users:send-newsletter')->assertSuccessful();
         $this->expectsDatabaseQueryCount(10);
     }
 
-    public function test_comando_users_send_newsletter_ejecutado_correctamente(): void
+    public function test_comando_users_send_Notification_ejecutado_correctamente(): void
     {
         Mail::fake();
         $this->runSeeds();
-        $this->artisan('users:send-newslatter')->assertSuccessful();
-        Mail::assertQueued('App\Mail\NewsletterShipped');
+        $this->artisan('users:send-newsletter')->assertSuccessful();
+        Mail::assertQueued('App\Mail\NotificationShipped');
     }
 }
