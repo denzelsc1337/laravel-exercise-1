@@ -1,26 +1,39 @@
 
-# Ejercicio 1: Envío de Boletín Informativo
+# 📦 Ejercicio 1: Envío de Boletín Informativo
 
-**Objetivo:** Envío en masa de un correo promocional a 10,000 usuarios sin afectar el rendimiento principal de la aplicación.
+Envío en masa de un correo promocional a 1,000,000 usuarios sin afectar el rendimiento principal de la aplicación.
 
-## **Normativas**
-- **Recursos:** Usaremos unicamente laravel sin packetes externos, puedes buscar en google y documentacion de laravel (Command, Mail, Scheduler)
-- **Prohibido:** no usar Inteligencia artificial ni Github copilot o parecidos
+### 🕵 **Normativas**
 
-### **Configuración Inicial:**
+- ⛔ prohibido paquetes externos
+- ⛔ prohibido inteligencia artificial
+- ⛔ prohibido github copilot
+- ✅ permitido documentacion de laravel
+- ✅ permitido google, stackoverflow
+### 🛠 **Configuración Inicial:**
 
-1. **Instalacion** ejercicio laravel: `compose require byancode/laravel-exercise-1`
-2. **Service Provider** ejecuta el comando `php artisan vendor:publish --provider="Byancode\LaravelExercise1\ServiceProvider`
-3. **Variables de Entorno:** Establece el email del sistema `test@byancode.com` y el nombre "Byancode" en las variables de entorno.
+1. **Instalacion** ejercicio laravel:
+```bash
+composer require byancode/laravel-exercise-1
+```
+2. **Service Provider** ejecuta el comando:
+```bash
+php artisan vendor:publish --provider="Byancode\LaravelExercise1\ServiceProvider"
+```
+3. **Variables de Entorno:**
+```properties
+MAIL_FROM_ADDRESS="test@byancode.com"
+MAIL_FROM_NAME="Byancode"
+```
 
-### **Modelos y Datos:**
+### 🗂 **Modelos y Datos:**
 
-2. **Modelo `Newsletter`:**
+1. **Modelo `Newsletter`:**
     - Crea un modelo llamado `Newsletter`.
     - Establece una relación `belongsToMany` con el modelo `User`.
 
-3. **Población de Datos:**
-    - Con ayuda de seeders, llena la tabla `User` con 10,000 registros de usuarios ficticios.
+2. **Población de Datos (Seeders):**
+    - Llena la tabla `users` con 1,000,000 registros de usuarios ficticios.
     - Crea un registro en `Newsletter` con un asunto (`subject`) que diga: **'Nueva actualizacion del sistema'**.
 
 ### **Funcionalidad de Envío:**
